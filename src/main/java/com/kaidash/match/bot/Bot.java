@@ -1,7 +1,6 @@
 package com.kaidash.match.bot;
 
 import com.kaidash.match.bot.handlers.MessageHandler;
-import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

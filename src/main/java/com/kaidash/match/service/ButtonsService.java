@@ -18,6 +18,13 @@ public class ButtonsService {
         replyKeyboardMarkup.setResizeKeyboard(true);
         replyKeyboardMarkup.setOneTimeKeyboard(false);
         replyKeyboardMarkup.setKeyboard(keyboardRows);
+        replyKeyboardMarkup.setOneTimeKeyboard(true);
+        return replyKeyboardMarkup;
+    }
+
+    public ReplyKeyboardMarkup hideButtons(){
+        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
+        replyKeyboardMarkup.setOneTimeKeyboard(false);
         return replyKeyboardMarkup;
     }
 

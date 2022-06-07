@@ -3,7 +3,7 @@
   <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.38">
     <root id="1">
       <DateStyle>dmy</DateStyle>
-      <IntrospectionStateNumber>939</IntrospectionStateNumber>
+      <IntrospectionStateNumber>960</IntrospectionStateNumber>
       <ServerVersion>14.2</ServerVersion>
       <StartupTime>1654388955</StartupTime>
       <TimeZones>true ACDT
@@ -804,9 +804,9 @@ false Zulu
 13388||10|C|G
 13388||-9223372036854775808|U|G
 13388||10|U|G</Grants>
-      <IntrospectionStateNumber>940</IntrospectionStateNumber>
+      <IntrospectionStateNumber>961</IntrospectionStateNumber>
       <ObjectId>40989</ObjectId>
-      <Relations>sequence|table|49195|49196|1
+      <Relations>sequence|table|49204|49205|1
 </Relations>
       <OwnerName>postgres</OwnerName>
     </database>
@@ -4236,102 +4236,100 @@ false Zulu
     <schema id="264" parent="3" name="public">
       <Comment>standard public schema</Comment>
       <Current>1</Current>
-      <IntrospectionStateNumber>940</IntrospectionStateNumber>
+      <IntrospectionStateNumber>961</IntrospectionStateNumber>
       <ObjectId>2200</ObjectId>
       <StateNumber>527</StateNumber>
       <OwnerName>postgres</OwnerName>
     </schema>
-    <sequence id="265" parent="264" name="user_id_seq">
-      <DataType>bigint|0s</DataType>
-      <ObjectId>49195</ObjectId>
-      <StateNumber>935</StateNumber>
+    <sequence id="265" parent="264" name="users_id_seq">
+      <DataType>integer|0s</DataType>
+      <ObjectId>49204</ObjectId>
+      <StateNumber>957</StateNumber>
       <OwnerName>postgres</OwnerName>
     </sequence>
-    <table id="266" parent="264" name="user">
-      <ObjectId>49196</ObjectId>
-      <StateNumber>935</StateNumber>
+    <table id="266" parent="264" name="users">
+      <ObjectId>49205</ObjectId>
+      <StateNumber>957</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
     <column id="267" parent="266" name="id">
-      <DataType>bigint|0s</DataType>
-      <DefaultExpression>nextval(&apos;user_id_seq&apos;::regclass)</DefaultExpression>
+      <DataType>integer|0s</DataType>
+      <DefaultExpression>nextval(&apos;users_id_seq&apos;::regclass)</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StateNumber>935</StateNumber>
-      <TypeId>20</TypeId>
+      <StateNumber>957</StateNumber>
+      <TypeId>23</TypeId>
     </column>
     <column id="268" parent="266" name="user_id">
       <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
       <Position>2</Position>
-      <StateNumber>935</StateNumber>
+      <StateNumber>957</StateNumber>
       <TypeId>20</TypeId>
     </column>
     <column id="269" parent="266" name="name">
-      <DataType>varchar(30)|0s</DataType>
+      <DataType>varchar(50)|0s</DataType>
+      <NotNull>1</NotNull>
       <Position>3</Position>
-      <StateNumber>935</StateNumber>
+      <StateNumber>957</StateNumber>
       <TypeId>1043</TypeId>
     </column>
     <column id="270" parent="266" name="age">
       <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
       <Position>4</Position>
-      <StateNumber>935</StateNumber>
+      <StateNumber>957</StateNumber>
       <TypeId>23</TypeId>
     </column>
     <column id="271" parent="266" name="sex">
       <DataType>varchar(20)|0s</DataType>
+      <NotNull>1</NotNull>
       <Position>5</Position>
-      <StateNumber>935</StateNumber>
+      <StateNumber>957</StateNumber>
       <TypeId>1043</TypeId>
     </column>
     <column id="272" parent="266" name="opposite_sex">
       <DataType>varchar(20)|0s</DataType>
+      <NotNull>1</NotNull>
       <Position>6</Position>
-      <StateNumber>935</StateNumber>
+      <StateNumber>957</StateNumber>
       <TypeId>1043</TypeId>
     </column>
     <column id="273" parent="266" name="city">
-      <DataType>varchar(35)|0s</DataType>
+      <DataType>varchar(50)|0s</DataType>
+      <NotNull>1</NotNull>
       <Position>7</Position>
-      <StateNumber>935</StateNumber>
+      <StateNumber>957</StateNumber>
       <TypeId>1043</TypeId>
     </column>
     <column id="274" parent="266" name="description">
       <DataType>varchar(255)|0s</DataType>
       <Position>8</Position>
-      <StateNumber>935</StateNumber>
+      <StateNumber>957</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <index id="275" parent="266" name="user_id_uindex">
+    <index id="275" parent="266" name="users_id_uindex">
       <ColNames>id</ColNames>
-      <ObjectId>49202</ObjectId>
-      <StateNumber>936</StateNumber>
+      <ObjectId>49211</ObjectId>
+      <StateNumber>958</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <index id="276" parent="266" name="user_pk">
+    <index id="276" parent="266" name="users_pk">
       <ColNames>id</ColNames>
-      <ObjectId>49200</ObjectId>
+      <ObjectId>49209</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>935</StateNumber>
+      <StateNumber>957</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <index id="277" parent="266" name="user_user_id_uindex">
-      <ColNames>user_id</ColNames>
-      <ObjectId>49203</ObjectId>
-      <StateNumber>937</StateNumber>
-      <Unique>1</Unique>
-      <AccessMethodId>403</AccessMethodId>
-    </index>
-    <key id="278" parent="266" name="user_pk">
+    <key id="277" parent="266" name="users_pk">
       <ColNames>id</ColNames>
-      <ObjectId>49201</ObjectId>
+      <ObjectId>49210</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>935</StateNumber>
-      <UnderlyingIndexId>49200</UnderlyingIndexId>
+      <StateNumber>957</StateNumber>
+      <UnderlyingIndexId>49209</UnderlyingIndexId>
     </key>
   </database-model>
 </dataSource>

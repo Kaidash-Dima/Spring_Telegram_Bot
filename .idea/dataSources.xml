@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="matchBot" uuid="807640c0-302d-45eb-9adf-1cb4f07035d4">
+    <data-source source="LOCAL" name="matchBot" uuid="a3d6488e-c912-4517-a1d0-56c0c6bfebfc">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
