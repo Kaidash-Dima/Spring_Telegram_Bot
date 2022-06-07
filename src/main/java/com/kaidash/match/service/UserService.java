@@ -14,9 +14,12 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    public boolean checkByUserId(long userId){
+        return userRepository.findByUserId(userId) != null;
+    }
 
-    public Optional<User> findById(long id){
-        return userRepository.findById(id);
+    public User findByUserId(long userId){
+        return userRepository.findByUserId(userId);
     }
 
     public void saveLocalUsers(UserLocal data) {
@@ -35,5 +38,8 @@ public class UserService {
     public void saveUser (User user){
 
         userRepository.save(user);
+    }
+    public Optional<User> findById(long id){
+        return userRepository.findById(id);
     }
 }

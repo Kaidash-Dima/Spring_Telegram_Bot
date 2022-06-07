@@ -39,15 +39,19 @@ public class User {
     private String city;
 
     @Column(name = "description")
-    private String description;
+    private String description = "";
 
-//    public User(long userId, String name, int age, String sex, String oppositeSex, String city, String description) {
-//        this.userId = userId;
-//        this.name = name;
-//        this.age = age;
-//        this.sex = sex;
-//        this.oppositeSex = oppositeSex;
-//        this.city = city;
-//        this.description = description;
-//    }
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", sex='" + sex + '\'' +
+                ", oppositeSex='" + oppositeSex + '\'' +
+                ", city='" + city + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

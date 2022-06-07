@@ -1,7 +1,7 @@
 package com.kaidash.match.bot.handlers;
 
+import com.kaidash.match.entity.User;
 import com.kaidash.match.local.UserLocal;
-import com.kaidash.match.repository.UserRepository;
 import com.kaidash.match.service.ButtonsService;
 import com.kaidash.match.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +11,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Component
 public class MessageHandler {
@@ -21,28 +19,61 @@ public class MessageHandler {
     private final UserLocal userLocal;
     private final ButtonsService buttonsService;
     private final SendMessage sendMessage = new SendMessage();
-    private final UserRepository userRepository;
 
     @Autowired
-    public MessageHandler(UserService userService, UserLocal userLocal, ButtonsService buttonsService, UserRepository userRepository) {
+    public MessageHandler(UserService userService, UserLocal userLocal, ButtonsService buttonsService) {
         this.userService = userService;
         this.userLocal = userLocal;
         this.buttonsService = buttonsService;
-        this.userRepository = userRepository;
     }
 
     private static int count = 0;
 
     public List<SendMessage> handle(Update update){
         List<SendMessage> responses = new ArrayList<>();
+        String menuChoice = update.getMessage().getText();
 
-        if (update.getMessage().getText().equals("/start")){
-            count = 1;
+        if (userService.checkByUserId(update.getMessage().getFrom().getId()) && menuChoice.equals("/start")){
+            return myProfile(update);
         }
 
+        switch (menuChoice){
+            case "1":
+            case "/start":
+                count = 1;
+                break;
+            case "2":
+                break;
+        }
+
+        if (count != 0){
+            responses = changeMyProfile(update);
+        }
+
+        return responses;
+    }
+
+    private String findUser(Update update){
+        User user = userService.findByUserId(update.getMessage().getFrom().getId());
+        return user.getName() + ", " + user.getAge() + ", " + user.getCity() + ", " + user.getDescription();
+    }
+    private List<SendMessage> myProfile(Update update){
+        List<SendMessage> responses = new ArrayList<>();
+
+        responses.add(SendMessage.builder().chatId(String.valueOf(update.getMessage().getChatId())).text(findUser(update)).build());
+
+        responses.add(createTextMessage(update, "1. Заполнить анкету\n2. Смотреть анкеты"));
+
+        createButtons(List.of("1", "2"));
+
+        return responses;
+    }
+
+    private List<SendMessage> changeMyProfile(Update update){
+        List<SendMessage> responses = new ArrayList<>();
         switch (count){
             case 1:
-                //нужно вывести анкету
+
                 responses.add(createTextMessage(update, "Как мне тебя назвать?"));
                 createButtons(List.of(update.getMessage().getFrom().getFirstName()));
                 buttonsService.hideButtons();
@@ -94,21 +125,21 @@ public class MessageHandler {
                 userLocal.setCity(update.getMessage().getText());
 
                 responses.add(createTextMessage(update, "Расскажи о себе и кого хочешь найти, чем предлагаешь заняться. " +
-                                                                "Это поможет лучше подобрать тебе компанию."));
+                        "Это поможет лучше подобрать тебе компанию."));
                 createButtons(List.of("Пропустить"));
 
                 count = 7;
                 break;
             case 7:
                 if (update.getMessage().getText().equals("Пропустить")){
-                    userLocal.setDescription(null);
+                    userLocal.setDescription("");
                 }else {
                     userLocal.setDescription(update.getMessage().getText());
                 }
 
                 userService.saveLocalUsers(userLocal);
 
-
+//------------------------------------------------------------------------------------------------------------------
                 String allData = "User Id - " + userLocal.getUserId() +"\n" +
                         "User name - " + userLocal.getName() + "\n" +
                         "User age - " + userLocal.getAge() +"\n" +
@@ -118,10 +149,14 @@ public class MessageHandler {
                         "User description - " + userLocal.getDescription() +"\n";
                 responses.add(createTextMessage(update, allData));
                 System.out.println(allData);
+//------------------------------------------------------------------------------------------------------------------
+
+                myProfile(update);
+
+                count = 0;
 
                 break;
         }
-
         return responses;
     }
 
