@@ -109,7 +109,7 @@ public class MessageHandler {
         responses.add(SendMessage.builder().chatId(String.valueOf(update.getMessage().getChatId()))
                 .text(findUser(update.getMessage().getFrom().getId())).build());
 
-        responses.add(createTextMessage(update, "1. Заполнить анкету\n2. Смотреть анкеты"));
+        responses.add(createTextMessage(update, "1. Заного заполнить анкету\n2. Смотреть анкеты"));
 
         createButtons(List.of("1", "2"));
 
@@ -156,43 +156,59 @@ public class MessageHandler {
                 break;
             case 3:
 
-                userLocal.setAge(Integer.parseInt(update.getMessage().getText()));
+                try {
+                    userLocal.setAge(Integer.parseInt(update.getMessage().getText()));
 
-                responses.add(createTextMessage(update, "Теперь определимся с полом"));
-                createButtons(List.of("Я парень", "Я девушка"));
+                    responses.add(createTextMessage(update, "Теперь определимся с полом"));
+                    createButtons(List.of("Я парень", "Я девушка"));
 
-                count = 4;
+                    count = 4;
+                }catch (NumberFormatException e){
+                    responses.add(createTextMessage(update,"Я прийму только чило \uD83D\uDE21"));
+                }
+
                 break;
             case 4:
 
-                if (update.getMessage().getText().equals("Я парень")) {
-                    userLocal.setSex(0);
-                }else if (update.getMessage().getText().equals("Я девушка")){
-                    userLocal.setSex(1);
+                if (update.getMessage().getText().equals("Я парень") || update.getMessage().getText().equals("Я девушка")) {
+
+                    if (update.getMessage().getText().equals("Я парень")) {
+                        userLocal.setSex(0);
+                    } else if (update.getMessage().getText().equals("Я девушка")) {
+                        userLocal.setSex(1);
+                    }
+
+                    responses.add(createTextMessage(update, "Кто тебе интересен?"));
+                    createButtons(List.of("Девушки", "Парни"));
+
+                    count = 5;
+                }else {
+                    responses.add(createTextMessage(update, "Выбери из того что есть на кнопках \uD83D\uDC47"));
                 }
 
-                responses.add(createTextMessage(update, "Кто тебе интересен?"));
-                createButtons(List.of("Девушки", "Парни"));
-
-                count = 5;
                 break;
             case 5:
 
-                if (update.getMessage().getText().equals("Девушки")) {
-                    userLocal.setOppositeSex(1);
-                }else if (update.getMessage().getText().equals("Парни")){
-                    userLocal.setOppositeSex(0);
-                }
+                if (update.getMessage().getText().equals("Девушки") || update.getMessage().getText().equals("Парни")) {
 
-                responses.add(createTextMessage(update, "Из какого ты города?"));
+                    if (update.getMessage().getText().equals("Девушки")) {
+                        userLocal.setOppositeSex(1);
+                    } else if (update.getMessage().getText().equals("Парни")) {
+                        userLocal.setOppositeSex(0);
+                    }
 
-                if (firstCount == 1){
-                    sendMessage.setReplyMarkup(new ReplyKeyboardRemove(true));
+                    responses.add(createTextMessage(update, "Из какого ты города?"));
+
+                    if (firstCount == 1) {
+                        sendMessage.setReplyMarkup(new ReplyKeyboardRemove(true));
+                    } else {
+                        createButtons(List.of(user.getCity()));
+                    }
+
+                    count = 6;
                 }else{
-                    createButtons(List.of(user.getCity()));
+                    responses.add(createTextMessage(update, "Выбери из того что есть на кнопках \uD83D\uDC47"));
                 }
-
-                count = 6;
                 break;
             case 6:
 
@@ -224,17 +240,6 @@ public class MessageHandler {
                 }else{
                     userService.updateUser(userLocal);
                 }
-
-//------------------------------------------------------------------------------------------------------------------
-                String allData = "User Id - " + userLocal.getUserId() +"\n" +
-                        "User name - " + userLocal.getName() + "\n" +
-                        "User age - " + userLocal.getAge() +"\n" +
-                        "User city - " + userLocal.getCity() +"\n" +
-                        "User sex - " + userLocal.getSex() +"\n" +
-                        "User opposite sex - " + userLocal.getOppositeSex() +"\n" +
-                        "User description - " + userLocal.getDescription() +"\n";
-                System.out.println(allData);
-//------------------------------------------------------------------------------------------------------------------
 
                 responses = myProfile(update);
 
