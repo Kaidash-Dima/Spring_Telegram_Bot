@@ -45,11 +45,8 @@ public class User {
     @Column(name = "opposite_sex_id")
     private long oppositeSexId;
 
-//    @ManyToMany
-//    @JoinTable(name = "match",
-//                joinColumns = @JoinColumn(name = "user1_id"),
-//                inverseJoinColumns = @JoinColumn(name = "user2_id"))
-//    private List<User> likeUsers;
+    @OneToMany(mappedBy = "user")
+    private List<Match> matches;
 
     @Override
     public String toString() {

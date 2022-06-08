@@ -19,9 +19,10 @@ public class Match {
     @Column(name = "id")
     private long id;
 
-    @Column(name = "user1_id")
-    private long userIdOne;
+    @Column(name = "opposite_user_id")
+    private long oppositeUserId;
 
-    @Column(name = "user2_id")
-    private long userIdTwo;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }

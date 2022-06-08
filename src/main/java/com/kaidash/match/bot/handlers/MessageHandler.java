@@ -1,8 +1,10 @@
 package com.kaidash.match.bot.handlers;
 
+import com.kaidash.match.entity.Match;
 import com.kaidash.match.entity.User;
 import com.kaidash.match.local.UserLocal;
 import com.kaidash.match.service.ButtonsService;
+import com.kaidash.match.service.MatchService;
 import com.kaidash.match.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -19,17 +21,21 @@ public class MessageHandler {
     private final UserService userService;
     private final UserLocal userLocal;
     private final ButtonsService buttonsService;
+    private final MatchService matchService;
     private SendMessage sendMessage = new SendMessage();
 
     @Autowired
-    public MessageHandler(UserService userService, UserLocal userLocal, ButtonsService buttonsService) {
+    public MessageHandler(UserService userService, UserLocal userLocal, ButtonsService buttonsService, MatchService matchService) {
         this.userService = userService;
         this.userLocal = userLocal;
         this.buttonsService = buttonsService;
+        this.matchService = matchService;
     }
 
     private static int count = 0;
     private static int firstCount = 0;
+
+    private static boolean likeUser;
 
     public List<SendMessage> handle(Update update){
         List<SendMessage> responses = new ArrayList<>();
@@ -48,7 +54,11 @@ public class MessageHandler {
                 break;
             case "2":
             case "❤️":
+                likeUser = true;
+                responses.add(nextProfile(update));
+                break;
             case "\uD83D\uDC4E":
+                likeUser = false;
                 responses.add(nextProfile(update));
                 break;
             case "\uD83D\uDCA4":
@@ -74,10 +84,22 @@ public class MessageHandler {
 
     private SendMessage nextProfile(Update update){
         User user = userService.findByUserId(update.getMessage().getFrom().getId());
-        User oppositeUser;
 
         long nextProfileId = user.getOppositeSexId();
         long countUser = userService.countUsers() - 1;
+
+        User oppositeUser = userService.findByUserId(nextProfileId);
+
+        if (likeUser){
+            Match match = new Match();
+            List<Match> list = new ArrayList<>();
+            match.setOppositeUserId(oppositeUser.getId());
+            list.add(match);
+            user.setMatches(list);
+            match.setUser(user);
+            matchService.saveMatch(match);
+            userService.saveUser(user);
+        }
 
         do{
             if (countUser == nextProfileId){
