@@ -16,17 +16,11 @@ public class ButtonsService {
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
         replyKeyboardMarkup.setSelective(true);
         replyKeyboardMarkup.setResizeKeyboard(true);
-        replyKeyboardMarkup.setOneTimeKeyboard(false);
         replyKeyboardMarkup.setKeyboard(keyboardRows);
-        replyKeyboardMarkup.setOneTimeKeyboard(true);
+        replyKeyboardMarkup.setOneTimeKeyboard(false);
         return replyKeyboardMarkup;
     }
 
-    public ReplyKeyboardMarkup hideButtons(){
-        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
-        replyKeyboardMarkup.setOneTimeKeyboard(false);
-        return replyKeyboardMarkup;
-    }
 
     public List<KeyboardRow> createButtons(List<String> buttonsName){
         List<KeyboardRow> keyboardRows = new ArrayList<>();

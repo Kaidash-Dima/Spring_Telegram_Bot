@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Setter
 @Getter
@@ -30,16 +31,25 @@ public class User {
     private int age;
 
     @Column(name = "sex")
-    private String sex;
+    private boolean sex;
 
     @Column(name = "opposite_sex")
-    private String oppositeSex;
+    private boolean oppositeSex;
 
     @Column(name = "city")
     private String city;
 
     @Column(name = "description")
     private String description = "";
+
+    @Column(name = "opposite_sex_id")
+    private long oppositeSexId;
+
+//    @ManyToMany
+//    @JoinTable(name = "match",
+//                joinColumns = @JoinColumn(name = "user1_id"),
+//                inverseJoinColumns = @JoinColumn(name = "user2_id"))
+//    private List<User> likeUsers;
 
     @Override
     public String toString() {

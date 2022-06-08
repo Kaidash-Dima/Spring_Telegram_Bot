@@ -15,31 +15,36 @@ public class UserService {
     private final UserRepository userRepository;
 
     public boolean checkByUserId(long userId){
-        return userRepository.findByUserId(userId) != null;
+        return findByUserId(userId) != null;
     }
 
     public User findByUserId(long userId){
         return userRepository.findByUserId(userId);
     }
 
-    public void saveLocalUsers(UserLocal data) {
-        User user = new User();
-        user.setUserId(data.getUserId());
-        user.setName(data.getName());
-        user.setAge(data.getAge());
-        user.setSex(data.getSex());
-        user.setOppositeSex(data.getOppositeSex());
-        user.setCity(data.getCity());
-        user.setDescription(data.getDescription());
+    public void updateUser(UserLocal userLocal){
+        User user = findByUserId(userLocal.getUserId());
+        setUser(userLocal, user);
+    }
 
-        userRepository.save(user);
+    private void setUser(UserLocal userLocal, User user) {
+        user.setName(userLocal.getName());
+        user.setAge(userLocal.getAge());
+        user.setSex(userLocal.isSex());
+        user.setOppositeSex(userLocal.isOppositeSex());
+        user.setCity(userLocal.getCity());
+        user.setDescription(userLocal.getDescription());
+
+        saveUser(user);
+    }
+
+    public void saveLocalUsers(UserLocal userLocal) {
+        User user = new User();
+        user.setUserId(userLocal.getUserId());
+        setUser(userLocal, user);
     }
 
     public void saveUser (User user){
-
         userRepository.save(user);
-    }
-    public Optional<User> findById(long id){
-        return userRepository.findById(id);
     }
 }

@@ -28,6 +28,7 @@ public class MessageHandler {
     }
 
     private static int count = 0;
+    private static int firstCount = 0;
 
     public List<SendMessage> handle(Update update){
         List<SendMessage> responses = new ArrayList<>();
@@ -35,6 +36,8 @@ public class MessageHandler {
 
         if (userService.checkByUserId(update.getMessage().getFrom().getId()) && menuChoice.equals("/start")){
             return myProfile(update);
+        }else if (!userService.checkByUserId(update.getMessage().getFrom().getId())){
+            firstCount = 1;
         }
 
         switch (menuChoice){
@@ -57,6 +60,7 @@ public class MessageHandler {
         User user = userService.findByUserId(update.getMessage().getFrom().getId());
         return user.getName() + ", " + user.getAge() + ", " + user.getCity() + ", " + user.getDescription();
     }
+
     private List<SendMessage> myProfile(Update update){
         List<SendMessage> responses = new ArrayList<>();
 
@@ -71,12 +75,23 @@ public class MessageHandler {
 
     private List<SendMessage> changeMyProfile(Update update){
         List<SendMessage> responses = new ArrayList<>();
+        User user = new User();
+
+        if (userService.checkByUserId(update.getMessage().getFrom().getId())){
+            user = userService.findByUserId(update.getMessage().getFrom().getId());
+        }
+
         switch (count){
+
             case 1:
 
                 responses.add(createTextMessage(update, "Как мне тебя назвать?"));
-                createButtons(List.of(update.getMessage().getFrom().getFirstName()));
-                buttonsService.hideButtons();
+
+                if (firstCount == 1){
+                    createButtons(List.of(update.getMessage().getFrom().getFirstName()));
+                }else{
+                    createButtons(List.of(user.getName()));
+                }
 
                 userLocal.setUserId(update.getMessage().getFrom().getId());
 
@@ -88,7 +103,12 @@ public class MessageHandler {
 
                 responses.add(createTextMessage(update, "Сколько тебе лет"));
 
-                buttonsService.hideButtons();
+                if (firstCount == 1){
+                    // скрыть или удалить кнопку
+                    // или вывести клаву цифер
+                }else{
+                    createButtons(List.of(String.valueOf(user.getAge())));
+                }
 
                 count = 3;
                 break;
@@ -103,7 +123,11 @@ public class MessageHandler {
                 break;
             case 4:
 
-                userLocal.setSex(update.getMessage().getText());
+                if (update.getMessage().getText().equals("Я парень")) {
+                    userLocal.setSex(false);
+                }else if (update.getMessage().getText().equals("Я девушка")){
+                    userLocal.setSex(true);
+                }
 
                 responses.add(createTextMessage(update, "Кто тебе интересен?"));
                 createButtons(List.of("Девушки", "Парни"));
@@ -112,11 +136,19 @@ public class MessageHandler {
                 break;
             case 5:
 
-                userLocal.setOppositeSex(update.getMessage().getText());
+                if (update.getMessage().getText().equals("Девушки")) {
+                    userLocal.setOppositeSex(true);
+                }else if (update.getMessage().getText().equals("Парни")){
+                    userLocal.setOppositeSex(false);
+                }
 
                 responses.add(createTextMessage(update, "Из какого ты города?"));
 
-                buttonsService.hideButtons();
+                if (firstCount == 1){
+                    // скрыть или удалить кнопку
+                }else{
+                    createButtons(List.of(user.getCity()));
+                }
 
                 count = 6;
                 break;
@@ -126,34 +158,46 @@ public class MessageHandler {
 
                 responses.add(createTextMessage(update, "Расскажи о себе и кого хочешь найти, чем предлагаешь заняться. " +
                         "Это поможет лучше подобрать тебе компанию."));
-                createButtons(List.of("Пропустить"));
+
+                if (firstCount == 1){
+                    createButtons(List.of("Пропустить"));
+                }else{
+                    createButtons(List.of("Пропустить", "Оставить"));
+                }
+
 
                 count = 7;
                 break;
             case 7:
                 if (update.getMessage().getText().equals("Пропустить")){
                     userLocal.setDescription("");
-                }else {
+                }else if (update.getMessage().getText().equals("Оставить")){
+                    userLocal.setDescription(user.getDescription());
+                }else{
                     userLocal.setDescription(update.getMessage().getText());
                 }
 
-                userService.saveLocalUsers(userLocal);
+                if (firstCount == 1) {
+                    userService.saveLocalUsers(userLocal);
+                }else{
+                    userService.updateUser(userLocal);
+                }
 
 //------------------------------------------------------------------------------------------------------------------
                 String allData = "User Id - " + userLocal.getUserId() +"\n" +
                         "User name - " + userLocal.getName() + "\n" +
                         "User age - " + userLocal.getAge() +"\n" +
                         "User city - " + userLocal.getCity() +"\n" +
-                        "User sex - " + userLocal.getSex() +"\n" +
-                        "User opposite sex - " + userLocal.getOppositeSex() +"\n" +
+                        "User sex - " + userLocal.isSex() +"\n" +
+                        "User opposite sex - " + userLocal.isOppositeSex() +"\n" +
                         "User description - " + userLocal.getDescription() +"\n";
-                responses.add(createTextMessage(update, allData));
                 System.out.println(allData);
 //------------------------------------------------------------------------------------------------------------------
 
-                myProfile(update);
+                responses = myProfile(update);
 
                 count = 0;
+                firstCount = 0;
 
                 break;
         }
