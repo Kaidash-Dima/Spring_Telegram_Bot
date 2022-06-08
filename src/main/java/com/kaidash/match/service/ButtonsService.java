@@ -21,7 +21,6 @@ public class ButtonsService {
         return replyKeyboardMarkup;
     }
 
-
     public List<KeyboardRow> createButtons(List<String> buttonsName){
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         KeyboardRow keyboardRow = new KeyboardRow();

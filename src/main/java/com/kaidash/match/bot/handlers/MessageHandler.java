@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardRemove;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,7 @@ public class MessageHandler {
     private final UserService userService;
     private final UserLocal userLocal;
     private final ButtonsService buttonsService;
-    private final SendMessage sendMessage = new SendMessage();
+    private SendMessage sendMessage = new SendMessage();
 
     @Autowired
     public MessageHandler(UserService userService, UserLocal userLocal, ButtonsService buttonsService) {
@@ -46,6 +47,12 @@ public class MessageHandler {
                 count = 1;
                 break;
             case "2":
+            case "❤️":
+            case "\uD83D\uDC4E":
+                responses.add(nextProfile(update));
+                break;
+            case "\uD83D\uDCA4":
+                responses.add(waitingProfile(update));
                 break;
         }
 
@@ -56,15 +63,51 @@ public class MessageHandler {
         return responses;
     }
 
-    private String findUser(Update update){
+    private SendMessage waitingProfile(Update update){
+        String message = "Подождем пока кто-то увидит твою анкету\n\n" +
+                            "1. Моя анкета.\n" +
+                            "2. Смотреть анкеты.";
+        createButtons(List.of("1", "2"));
+
+        return createTextMessage(update, message);
+    }
+
+    private SendMessage nextProfile(Update update){
         User user = userService.findByUserId(update.getMessage().getFrom().getId());
+        User oppositeUser;
+
+        long nextProfileId = user.getOppositeSexId();
+        long countUser = userService.countUsers() - 1;
+
+        do{
+            if (countUser == nextProfileId){
+                nextProfileId = 1;
+            }else {
+                nextProfileId++;
+            }
+            oppositeUser = userService.findByUserId(nextProfileId);
+        }while (user.getOppositeSex() != oppositeUser.getSex());
+
+        user.setOppositeSexId(nextProfileId);
+        userService.saveUser(user);
+
+        sendMessage = createTextMessage(update, findUser(nextProfileId));
+
+        createButtons(List.of("❤️", "\uD83D\uDC4E", "\uD83D\uDCA4"));
+
+        return sendMessage;
+    }
+
+    private String findUser(long id){
+        User user = userService.findByUserId(id);
         return user.getName() + ", " + user.getAge() + ", " + user.getCity() + ", " + user.getDescription();
     }
 
     private List<SendMessage> myProfile(Update update){
         List<SendMessage> responses = new ArrayList<>();
 
-        responses.add(SendMessage.builder().chatId(String.valueOf(update.getMessage().getChatId())).text(findUser(update)).build());
+        responses.add(SendMessage.builder().chatId(String.valueOf(update.getMessage().getChatId()))
+                .text(findUser(update.getMessage().getFrom().getId())).build());
 
         responses.add(createTextMessage(update, "1. Заполнить анкету\n2. Смотреть анкеты"));
 
@@ -104,8 +147,7 @@ public class MessageHandler {
                 responses.add(createTextMessage(update, "Сколько тебе лет"));
 
                 if (firstCount == 1){
-                    // скрыть или удалить кнопку
-                    // или вывести клаву цифер
+                    sendMessage.setReplyMarkup(new ReplyKeyboardRemove(true));
                 }else{
                     createButtons(List.of(String.valueOf(user.getAge())));
                 }
@@ -124,9 +166,9 @@ public class MessageHandler {
             case 4:
 
                 if (update.getMessage().getText().equals("Я парень")) {
-                    userLocal.setSex(false);
+                    userLocal.setSex(0);
                 }else if (update.getMessage().getText().equals("Я девушка")){
-                    userLocal.setSex(true);
+                    userLocal.setSex(1);
                 }
 
                 responses.add(createTextMessage(update, "Кто тебе интересен?"));
@@ -137,15 +179,15 @@ public class MessageHandler {
             case 5:
 
                 if (update.getMessage().getText().equals("Девушки")) {
-                    userLocal.setOppositeSex(true);
+                    userLocal.setOppositeSex(1);
                 }else if (update.getMessage().getText().equals("Парни")){
-                    userLocal.setOppositeSex(false);
+                    userLocal.setOppositeSex(0);
                 }
 
                 responses.add(createTextMessage(update, "Из какого ты города?"));
 
                 if (firstCount == 1){
-                    // скрыть или удалить кнопку
+                    sendMessage.setReplyMarkup(new ReplyKeyboardRemove(true));
                 }else{
                     createButtons(List.of(user.getCity()));
                 }
@@ -188,8 +230,8 @@ public class MessageHandler {
                         "User name - " + userLocal.getName() + "\n" +
                         "User age - " + userLocal.getAge() +"\n" +
                         "User city - " + userLocal.getCity() +"\n" +
-                        "User sex - " + userLocal.isSex() +"\n" +
-                        "User opposite sex - " + userLocal.isOppositeSex() +"\n" +
+                        "User sex - " + userLocal.getSex() +"\n" +
+                        "User opposite sex - " + userLocal.getOppositeSex() +"\n" +
                         "User description - " + userLocal.getDescription() +"\n";
                 System.out.println(allData);
 //------------------------------------------------------------------------------------------------------------------

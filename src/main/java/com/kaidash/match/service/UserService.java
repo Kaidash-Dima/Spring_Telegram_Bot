@@ -14,6 +14,10 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    public long countUsers(){
+        return userRepository.count();
+    }
+
     public boolean checkByUserId(long userId){
         return findByUserId(userId) != null;
     }
@@ -30,8 +34,8 @@ public class UserService {
     private void setUser(UserLocal userLocal, User user) {
         user.setName(userLocal.getName());
         user.setAge(userLocal.getAge());
-        user.setSex(userLocal.isSex());
-        user.setOppositeSex(userLocal.isOppositeSex());
+        user.setSex(userLocal.getSex());
+        user.setOppositeSex(userLocal.getOppositeSex());
         user.setCity(userLocal.getCity());
         user.setDescription(userLocal.getDescription());
 

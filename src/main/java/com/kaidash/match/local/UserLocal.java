@@ -11,11 +11,11 @@ public class UserLocal {
     private long userId;
     private String name = "";
     private int age = 0;
-    private boolean sex;
-    private boolean oppositeSex;
+    private int sex;
+    private int oppositeSex;
     private String city = "";
     private String description = "";
-    private long oppositeSexId;
+    private long oppositeSexId = 1;
 
     @Override
     public String toString() {
@@ -29,13 +29,5 @@ public class UserLocal {
                 ", description='" + description + '\'' +
                 ", oppositeSexId='" + oppositeSexId + '\'' +
                 '}';
-    }
-
-    public boolean isSex() {
-        return sex;
-    }
-
-    public boolean isOppositeSex() {
-        return oppositeSex;
     }
 }

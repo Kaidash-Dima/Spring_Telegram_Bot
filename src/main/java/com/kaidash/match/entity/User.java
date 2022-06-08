@@ -31,10 +31,10 @@ public class User {
     private int age;
 
     @Column(name = "sex")
-    private boolean sex;
+    private int sex;
 
     @Column(name = "opposite_sex")
-    private boolean oppositeSex;
+    private int oppositeSex;
 
     @Column(name = "city")
     private String city;
