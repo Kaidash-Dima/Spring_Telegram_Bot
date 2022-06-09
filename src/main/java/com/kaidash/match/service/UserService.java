@@ -36,6 +36,7 @@ public class UserService {
         user.setOppositeSex(userLocal.getOppositeSex());
         user.setCity(userLocal.getCity());
         user.setDescription(userLocal.getDescription());
+        user.setUserName(userLocal.getUserName());
 
         saveUser(user);
     }

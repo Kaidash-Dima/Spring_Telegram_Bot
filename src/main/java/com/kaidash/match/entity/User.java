@@ -27,6 +27,9 @@ public class User {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "user_name")
+    private String userName;
+
     @Column(name = "age")
     private int age;
 
@@ -45,20 +48,6 @@ public class User {
     @Column(name = "opposite_sex_id")
     private long oppositeSexId;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "oppositeUserId")
     private List<Match> matches;
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", userId=" + userId +
-                ", name='" + name + '\'' +
-                ", age=" + age +
-                ", sex='" + sex + '\'' +
-                ", oppositeSex='" + oppositeSex + '\'' +
-                ", city='" + city + '\'' +
-                ", description='" + description + '\'' +
-                '}';
-    }
 }

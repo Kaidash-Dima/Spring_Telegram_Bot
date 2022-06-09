@@ -3,7 +3,7 @@
   <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.38">
     <root id="1">
       <DateStyle>dmy</DateStyle>
-      <IntrospectionStateNumber>1117</IntrospectionStateNumber>
+      <IntrospectionStateNumber>1190</IntrospectionStateNumber>
       <ServerVersion>14.2</ServerVersion>
       <StartupTime>1654647943</StartupTime>
       <TimeZones>true ACDT
@@ -804,7 +804,7 @@ false Zulu
 13388||10|C|G
 13388||-9223372036854775808|U|G
 13388||10|U|G</Grants>
-      <IntrospectionStateNumber>1118</IntrospectionStateNumber>
+      <IntrospectionStateNumber>1191</IntrospectionStateNumber>
       <ObjectId>40989</ObjectId>
       <Relations>sequence|table|49232|49233|1
 sequence|table|49204|49205|1
@@ -4237,7 +4237,7 @@ sequence|table|49204|49205|1
     <schema id="264" parent="3" name="public">
       <Comment>standard public schema</Comment>
       <Current>1</Current>
-      <IntrospectionStateNumber>1118</IntrospectionStateNumber>
+      <IntrospectionStateNumber>1191</IntrospectionStateNumber>
       <ObjectId>2200</ObjectId>
       <StateNumber>527</StateNumber>
       <OwnerName>postgres</OwnerName>
@@ -4262,7 +4262,7 @@ sequence|table|49204|49205|1
     </table>
     <table id="268" parent="264" name="users">
       <ObjectId>49205</ObjectId>
-      <StateNumber>1051</StateNumber>
+      <StateNumber>1188</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
@@ -4365,14 +4365,20 @@ sequence|table|49204|49205|1
       <StateNumber>973</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <index id="284" parent="268" name="users_id_uindex">
+    <column id="284" parent="268" name="user_name">
+      <DataType>varchar(50)|0s</DataType>
+      <Position>10</Position>
+      <StateNumber>1188</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <index id="285" parent="268" name="users_id_uindex">
       <ColNames>id</ColNames>
       <ObjectId>49211</ObjectId>
       <StateNumber>1051</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <index id="285" parent="268" name="users_pk">
+    <index id="286" parent="268" name="users_pk">
       <ColNames>id</ColNames>
       <ObjectId>49209</ObjectId>
       <Primary>1</Primary>
@@ -4380,7 +4386,7 @@ sequence|table|49204|49205|1
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="286" parent="268" name="users_pk">
+    <key id="287" parent="268" name="users_pk">
       <ColNames>id</ColNames>
       <ObjectId>49210</ObjectId>
       <Primary>1</Primary>
