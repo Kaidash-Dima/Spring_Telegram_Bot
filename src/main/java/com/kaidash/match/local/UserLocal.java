@@ -15,6 +15,6 @@ public class UserLocal {
     private int oppositeSex;
     private String city = "";
     private String description = "";
-    private long oppositeSexId = 1;
+    private long oppositeSexId;
     private String userName;
 }

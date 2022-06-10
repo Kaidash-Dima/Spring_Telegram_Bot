@@ -46,7 +46,7 @@ public class User {
     private String description = "";
 
     @Column(name = "opposite_sex_id")
-    private long oppositeSexId;
+    private long oppositeSexId = 1;
 
     @OneToMany(mappedBy = "oppositeUserId")
     private List<Match> matches;

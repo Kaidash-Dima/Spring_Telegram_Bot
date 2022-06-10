@@ -83,15 +83,28 @@ public class MessageHandler {
         List<SendMessage> responses = new ArrayList<>();
         User user = userService.findByUserId(update.getMessage().getFrom().getId());
         List<Match> matches = matchService.findAllByUserId(user.getId());
+        List<Match> matchesOpposite = new ArrayList<>();
 
         if(matches.size() != 0) {
             for (Match temp : matches){
-                responses.add(SendMessage.builder().chatId(String.valueOf(update.getMessage().getChatId()))
-                        .text(outputProfile(temp.getOppositeUserId().getUserId())).build());
-                responses.add(SendMessage.builder().chatId(String.valueOf(update.getMessage().getChatId()))
-                        .text("Есть взаимная симпатия! Начинай общаться\uD83D\uDC49" + "@" + temp.getOppositeUserId().getUserName())
-                        .build());
+
+                matchesOpposite = matchService.findAllByUserId(temp.getOppositeUserId().getId());
+
+                if (matchesOpposite != null){
+                    for (Match tempOpposite : matchesOpposite){
+                        if(tempOpposite.getOppositeUserId().getId() == temp.getUserId()){
+                            responses.add(SendMessage.builder().chatId(String.valueOf(update.getMessage().getChatId()))
+                                    .text(outputProfile(temp.getOppositeUserId())).build());
+                            responses.add(SendMessage.builder().chatId(String.valueOf(update.getMessage().getChatId()))
+                                    .text("Есть взаимная симпатия! Начинай общаться\uD83D\uDC49" + "@" + temp.getOppositeUserId().getUserName())
+                                    .build());
+                            break;
+                        }
+                    }
+                }
+
             }
+            responses.add(waitingProfile(update));
             matchService.deleteAllByUserId(matches);
         }else{
             responses.add(SendMessage.builder().chatId(String.valueOf(update.getMessage().getChatId()))
@@ -112,11 +125,7 @@ public class MessageHandler {
 
     private SendMessage nextProfile(Update update){
         User user = userService.findByUserId(update.getMessage().getFrom().getId());
-
-        long nextProfileId = user.getOppositeSexId();
-        long countUser = userService.countUsers() - 1;
-
-        User oppositeUser = userService.findByUserId(nextProfileId);
+        User oppositeUser = userService.findById(user.getOppositeSexId());
 
         if (likeUser){
             Match match = new Match();
@@ -130,26 +139,34 @@ public class MessageHandler {
             likeUser = false;
         }
 
+        long nextId = 0;
+
         do{
-            if (countUser == nextProfileId){
-                nextProfileId = 1;
+            if (user.getOppositeSexId() >= userService.getLastUser().getId() || nextId >= userService.getLastUser().getId()){
+                oppositeUser = userService.getFirstUser();
+                userService.resetId(oppositeUser.getId());
+                nextId = oppositeUser.getId();
             }else {
-                nextProfileId++;
+                nextId = userService.nextId();
+                oppositeUser = userService.findById(nextId);
             }
-            oppositeUser = userService.findByUserId(nextProfileId);
         }while (user.getOppositeSex() != oppositeUser.getSex());
 
-        user.setOppositeSexId(nextProfileId);
+        user.setOppositeSexId(nextId);
         userService.saveUser(user);
 
-        sendMessage = createTextMessage(update, outputProfile(nextProfileId));
+        sendMessage = createTextMessage(update, outputProfile(oppositeUser));
 
         createButtons(List.of("❤️", "\uD83D\uDC4E", "\uD83D\uDCA4"));
 
         return sendMessage;
     }
 
-    private String outputProfile(long userId){
+    private String outputProfile(User user){
+        return user.getName() + ", " + user.getAge() + ", " + user.getCity() + ", " + user.getDescription();
+    }
+
+    private String outputFindProfile(long userId){
         User user = userService.findByUserId(userId);
         return user.getName() + ", " + user.getAge() + ", " + user.getCity() + ", " + user.getDescription();
     }
@@ -158,7 +175,7 @@ public class MessageHandler {
         List<SendMessage> responses = new ArrayList<>();
 
         responses.add(SendMessage.builder().chatId(String.valueOf(update.getMessage().getChatId()))
-                .text(outputProfile(update.getMessage().getFrom().getId())).build());
+                .text(outputFindProfile(update.getMessage().getFrom().getId())).build());
 
         responses.add(createTextMessage(update, "1. Заного заполнить анкету\n2. Смотреть анкеты"));
 
@@ -288,6 +305,9 @@ public class MessageHandler {
 
                 if (firstCount == 1) {
                     userService.saveLocalUsers(userLocal);
+                    user = userService.findByUserId(userLocal.getUserId());
+                    userLocal.setOppositeSexId(user.getId());
+                    userService.updateUser(userLocal);
                 }else{
                     userService.updateUser(userLocal);
                 }
