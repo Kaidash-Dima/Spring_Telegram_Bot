@@ -98,14 +98,20 @@ public class MessageHandler {
                             responses.add(SendMessage.builder().chatId(String.valueOf(update.getMessage().getChatId()))
                                     .text("Есть взаимная симпатия! Начинай общаться\uD83D\uDC49" + "@" + temp.getOppositeUserId().getUserName())
                                     .build());
+                            responses.add(SendMessage.builder().chatId(String.valueOf(userService.findById(tempOpposite.getUserId()).getUserId()))
+                                    .text(outputProfile(temp.getOppositeUserId())).build());
+                            responses.add(SendMessage.builder().chatId(String.valueOf(userService.findById(tempOpposite.getUserId()).getUserId()))
+                                    .text("Есть взаимная симпатия! Начинай общаться\uD83D\uDC49" + "@" + tempOpposite.getOppositeUserId().getUserName())
+                                    .build());
+                            matchService.deleteById(tempOpposite);
+                            matchService.deleteById(temp);
                             break;
                         }
                     }
                 }
-
             }
             responses.add(waitingProfile(update));
-            matchService.deleteAllByUserId(matches);
+//            matchService.deleteAllByUserId(matches);
         }else{
             responses.add(SendMessage.builder().chatId(String.valueOf(update.getMessage().getChatId()))
                     .text("Еще не кто не лайкнул твою анкету").build());

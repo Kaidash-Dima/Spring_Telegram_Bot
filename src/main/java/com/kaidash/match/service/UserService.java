@@ -27,7 +27,6 @@ public class UserService {
 
         do {
             temp = userRepository.getNextSeriesId();
-            System.out.println(temp);
         }while (findById(temp) == null);
 
         return temp;

@@ -9,9 +9,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/a3d6488e-c912-4517-a1d0-56c0c6bfebfc/storage_v2/_src_/database/matchBot.whmyEQ/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/a3d6488e-c912-4517-a1d0-56c0c6bfebfc/storage_v2/_src_/database/matchBot.whmyEQ/schema/public.abK9xQ.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/kaidash/match/bot/handlers/MessageHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaidash/match/bot/handlers/MessageHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaidash/match/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaidash/match/entity/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaidash/match/local/UserLocal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaidash/match/local/UserLocal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaidash/match/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaidash/match/repository/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaidash/match/service/MatchService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaidash/match/service/MatchService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/kaidash/match/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaidash/match/service/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -118,7 +116,8 @@
       <workItem from="1654646732357" duration="957000" />
       <workItem from="1654648021402" duration="17665000" />
       <workItem from="1654680734023" duration="3604000" />
-      <workItem from="1654735551013" duration="32524000" />
+      <workItem from="1654735551013" duration="33181000" />
+      <workItem from="1654832743126" duration="1574000" />
     </task>
     <servers />
   </component>

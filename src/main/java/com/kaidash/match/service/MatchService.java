@@ -6,16 +6,14 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
 public class MatchService {
 
     private final MatchRepository matchRepository;
-    public Match findById(long id){
-        Optional<Match> matchOptional = matchRepository.findById(id);
-        return matchOptional.orElse(null);
+    public void deleteById(Match match){
+        matchRepository.delete(match);
     }
 
     public void saveMatch (Match match){
@@ -24,9 +22,5 @@ public class MatchService {
 
     public List<Match> findAllByUserId(long id){
         return matchRepository.findAllByUserId(id);
-    }
-
-    public void deleteAllByUserId(List<Match> matches){
-        matchRepository.deleteAll(matches);
     }
 }
