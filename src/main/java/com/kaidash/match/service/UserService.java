@@ -27,6 +27,7 @@ public class UserService {
 
         do {
             temp = userRepository.getNextSeriesId();
+            System.out.println(temp);
         }while (findById(temp) == null);
 
         return temp;
@@ -39,10 +40,6 @@ public class UserService {
     public User findById(long id){
         Optional<User> userOptional =  userRepository.findById(id);
         return userOptional.orElse(null);
-    }
-
-    public boolean checkByUserId(long userId){
-        return findByUserId(userId) != null;
     }
 
     public User findByUserId(long userId){

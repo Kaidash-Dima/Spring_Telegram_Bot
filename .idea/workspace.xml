@@ -5,11 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2dacd836-b266-4d42-b93b-88750d6f74e7" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/kaidash/match/entity/ChatStatus.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/a3d6488e-c912-4517-a1d0-56c0c6bfebfc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/a3d6488e-c912-4517-a1d0-56c0c6bfebfc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/a3d6488e-c912-4517-a1d0-56c0c6bfebfc/storage_v2/_src_/database/matchBot.whmyEQ/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/a3d6488e-c912-4517-a1d0-56c0c6bfebfc/storage_v2/_src_/database/matchBot.whmyEQ/schema/public.abK9xQ.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/kaidash/match/bot/handlers/MessageHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaidash/match/bot/handlers/MessageHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaidash/match/service/MatchService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaidash/match/service/MatchService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaidash/match/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaidash/match/entity/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/kaidash/match/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaidash/match/service/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -20,9 +21,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Enum" />
         <option value="Interface" />
         <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -54,31 +55,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;extract.method.default.visibility&quot;: &quot;private&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Telegram_Bot&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;18fb75d4c258a98eaec5e12d2c3f1802&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "extract.method.default.visibility": "private",
+    "last_opened_file_path": "D:/Telegram_Bot",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "spring.configuration.checksum": "18fb75d4c258a98eaec5e12d2c3f1802"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;postgresql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="RunApp" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="Telegram_Bot" />
@@ -117,7 +118,17 @@
       <workItem from="1654648021402" duration="17665000" />
       <workItem from="1654680734023" duration="3604000" />
       <workItem from="1654735551013" duration="33181000" />
-      <workItem from="1654832743126" duration="1574000" />
+      <workItem from="1654832743126" duration="1666000" />
+      <workItem from="1654842781714" duration="574000" />
+      <workItem from="1654897423202" duration="606000" />
+      <workItem from="1654904904863" duration="4798000" />
+      <workItem from="1654912439980" duration="476000" />
+      <workItem from="1654991410416" duration="140000" />
+      <workItem from="1654991684756" duration="97000" />
+      <workItem from="1654991938175" duration="92000" />
+      <workItem from="1654993029455" duration="6201000" />
+      <workItem from="1655006098490" duration="3943000" />
+      <workItem from="1655144619538" duration="166000" />
     </task>
     <servers />
   </component>

@@ -34,18 +34,18 @@ public class MessageHandler {
 
     private static int count = 0;
     private static int firstCount = 0;
-    private static boolean likeUser;
+    private static int likeUser = 0;
 
     public List<SendMessage> handle(Update update){
         List<SendMessage> responses = new ArrayList<>();
         String menuChoice = update.getMessage().getText();
+        User user = userService.findByUserId(update.getMessage().getFrom().getId());
 
-        if (userService.checkByUserId(update.getMessage().getFrom().getId()) && menuChoice.equals("/start")){
+        if (menuChoice.equals("/start") && user != null){
             return myProfile(update);
-        }else if (!userService.checkByUserId(update.getMessage().getFrom().getId())){
+        }else if (user != null){
             firstCount = 1;
         }
-
         switch (menuChoice){
             case "1":
             case "/start":
@@ -55,14 +55,18 @@ public class MessageHandler {
                 responses.add(nextProfile(update));
                 break;
             case "❤️":
-                likeUser = true;
+                likeUser = 1;
                 responses.add(nextProfile(update));
                 break;
             case "\uD83D\uDC4E":
-                likeUser = false;
+                likeUser = 0;
                 responses.add(nextProfile(update));
                 break;
             case "\uD83D\uDCA4":
+                likeUser = 3;
+                assert user != null;
+                user.setOppositeSexId(user.getOppositeSexId() - 1);
+                userService.saveUser(user);
                 responses.add(SendMessage.builder().chatId(String.valueOf(update.getMessage().getChatId()))
                         .text("Подождем пока кто-то увидит твою анкету").build());
                 responses.add(waitingProfile(update));
@@ -111,7 +115,6 @@ public class MessageHandler {
                 }
             }
             responses.add(waitingProfile(update));
-//            matchService.deleteAllByUserId(matches);
         }else{
             responses.add(SendMessage.builder().chatId(String.valueOf(update.getMessage().getChatId()))
                     .text("Еще не кто не лайкнул твою анкету").build());
@@ -133,7 +136,7 @@ public class MessageHandler {
         User user = userService.findByUserId(update.getMessage().getFrom().getId());
         User oppositeUser = userService.findById(user.getOppositeSexId());
 
-        if (likeUser){
+        if (likeUser == 1){
             Match match = new Match();
             List<Match> list = new ArrayList<>();
             match.setOppositeUserId(oppositeUser);
@@ -142,10 +145,14 @@ public class MessageHandler {
             match.setUserId(user.getId());
             matchService.saveMatch(match);
             userService.saveUser(user);
-            likeUser = false;
+            likeUser = 0;
         }
 
         long nextId = 0;
+        if (likeUser == 2){
+            userService.resetId(user.getOppositeSexId() - 1);
+            likeUser = 0;
+        }
 
         do{
             if (user.getOppositeSexId() >= userService.getLastUser().getId() || nextId >= userService.getLastUser().getId()){
@@ -192,139 +199,138 @@ public class MessageHandler {
 
     private List<SendMessage> changeMyProfile(Update update){
         List<SendMessage> responses = new ArrayList<>();
-        User user = new User();
+        User user = userService.findByUserId(update.getMessage().getFrom().getId());
 
-        if (userService.checkByUserId(update.getMessage().getFrom().getId())){
-            user = userService.findByUserId(update.getMessage().getFrom().getId());
-        }
+        if (user != null) {
 
-        switch (count){
+            switch (count) {
 
-            case 1:
+                case 1:
 
-                responses.add(createTextMessage(update, "Как мне тебя назвать?"));
+                    responses.add(createTextMessage(update, "Как мне тебя назвать?"));
 
-                if (firstCount == 1){
-                    createButtons(List.of(update.getMessage().getFrom().getFirstName()));
-                }else{
-                    createButtons(List.of(user.getName()));
-                }
-
-                userLocal.setUserId(update.getMessage().getFrom().getId());
-                userLocal.setUserName(update.getMessage().getFrom().getUserName());
-
-                count = 2;
-                break;
-            case 2:
-
-                userLocal.setName(update.getMessage().getText());
-
-                responses.add(createTextMessage(update, "Сколько тебе лет"));
-
-                if (firstCount == 1){
-                    sendMessage.setReplyMarkup(new ReplyKeyboardRemove(true));
-                }else{
-                    createButtons(List.of(String.valueOf(user.getAge())));
-                }
-
-                count = 3;
-                break;
-            case 3:
-
-                try {
-                    userLocal.setAge(Integer.parseInt(update.getMessage().getText()));
-
-                    responses.add(createTextMessage(update, "Теперь определимся с полом"));
-                    createButtons(List.of("Я парень", "Я девушка"));
-
-                    count = 4;
-                }catch (NumberFormatException e){
-                    responses.add(createTextMessage(update,"Я прийму только чило \uD83D\uDE21"));
-                }
-
-                break;
-            case 4:
-
-                if (update.getMessage().getText().equals("Я парень") || update.getMessage().getText().equals("Я девушка")) {
-
-                    if (update.getMessage().getText().equals("Я парень")) {
-                        userLocal.setSex(0);
-                    } else if (update.getMessage().getText().equals("Я девушка")) {
-                        userLocal.setSex(1);
+                    if (firstCount == 1) {
+                        createButtons(List.of(update.getMessage().getFrom().getFirstName()));
+                    } else {
+                        createButtons(List.of(user.getName()));
                     }
 
-                    responses.add(createTextMessage(update, "Кто тебе интересен?"));
-                    createButtons(List.of("Девушки", "Парни"));
+                    userLocal.setUserId(update.getMessage().getFrom().getId());
+                    userLocal.setUserName(update.getMessage().getFrom().getUserName());
 
-                    count = 5;
-                }else {
-                    responses.add(createTextMessage(update, "Выбери из того что есть на кнопках \uD83D\uDC47"));
-                }
+                    count = 2;
+                    break;
+                case 2:
+                    userLocal.setName(update.getMessage().getText());
 
-                break;
-            case 5:
-
-                if (update.getMessage().getText().equals("Девушки") || update.getMessage().getText().equals("Парни")) {
-
-                    if (update.getMessage().getText().equals("Девушки")) {
-                        userLocal.setOppositeSex(1);
-                    } else if (update.getMessage().getText().equals("Парни")) {
-                        userLocal.setOppositeSex(0);
-                    }
-
-                    responses.add(createTextMessage(update, "Из какого ты города?"));
+                    responses.add(createTextMessage(update, "Сколько тебе лет"));
 
                     if (firstCount == 1) {
                         sendMessage.setReplyMarkup(new ReplyKeyboardRemove(true));
                     } else {
-                        createButtons(List.of(user.getCity()));
+                        createButtons(List.of(String.valueOf(user.getAge())));
                     }
 
-                    count = 6;
-                }else{
-                    responses.add(createTextMessage(update, "Выбери из того что есть на кнопках \uD83D\uDC47"));
-                }
-                break;
-            case 6:
+                    count = 3;
+                    break;
+                case 3:
 
-                userLocal.setCity(update.getMessage().getText());
+                    try {
+                        userLocal.setAge(Integer.parseInt(update.getMessage().getText()));
 
-                responses.add(createTextMessage(update, "Расскажи о себе и кого хочешь найти, чем предлагаешь заняться. " +
-                        "Это поможет лучше подобрать тебе компанию."));
+                        responses.add(createTextMessage(update, "Теперь определимся с полом"));
+                        createButtons(List.of("Я парень", "Я девушка"));
 
-                if (firstCount == 1){
-                    createButtons(List.of("Пропустить"));
-                }else{
-                    createButtons(List.of("Пропустить", "Оставить"));
-                }
+                        count = 4;
+                    } catch (NumberFormatException e) {
+                        responses.add(createTextMessage(update, "Я прийму только чило \uD83D\uDE21"));
+                    }
 
-                count = 7;
-                break;
-            case 7:
-                if (update.getMessage().getText().equals("Пропустить")){
-                    userLocal.setDescription("");
-                }else if (update.getMessage().getText().equals("Оставить")){
-                    userLocal.setDescription(user.getDescription());
-                }else{
-                    userLocal.setDescription(update.getMessage().getText());
-                }
+                    break;
+                case 4:
 
-                if (firstCount == 1) {
-                    userService.saveLocalUsers(userLocal);
-                    user = userService.findByUserId(userLocal.getUserId());
-                    userLocal.setOppositeSexId(user.getId());
-                    userService.updateUser(userLocal);
-                }else{
-                    userService.updateUser(userLocal);
-                }
+                    if (update.getMessage().getText().equals("Я парень") || update.getMessage().getText().equals("Я девушка")) {
 
-                responses = myProfile(update);
+                        if (update.getMessage().getText().equals("Я парень")) {
+                            userLocal.setSex(0);
+                        } else if (update.getMessage().getText().equals("Я девушка")) {
+                            userLocal.setSex(1);
+                        }
 
-                count = 0;
-                firstCount = 0;
+                        responses.add(createTextMessage(update, "Кто тебе интересен?"));
+                        createButtons(List.of("Девушки", "Парни"));
 
-                break;
+                        count = 5;
+                    } else {
+                        responses.add(createTextMessage(update, "Выбери из того что есть на кнопках \uD83D\uDC47"));
+                    }
+
+                    break;
+                case 5:
+
+                    if (update.getMessage().getText().equals("Девушки") || update.getMessage().getText().equals("Парни")) {
+
+                        if (update.getMessage().getText().equals("Девушки")) {
+                            userLocal.setOppositeSex(1);
+                        } else if (update.getMessage().getText().equals("Парни")) {
+                            userLocal.setOppositeSex(0);
+                        }
+
+                        responses.add(createTextMessage(update, "Из какого ты города?"));
+
+                        if (firstCount == 1) {
+                            sendMessage.setReplyMarkup(new ReplyKeyboardRemove(true));
+                        } else {
+                            createButtons(List.of(user.getCity()));
+                        }
+
+                        count = 6;
+                    } else {
+                        responses.add(createTextMessage(update, "Выбери из того что есть на кнопках \uD83D\uDC47"));
+                    }
+                    break;
+                case 6:
+
+                    userLocal.setCity(update.getMessage().getText());
+
+                    responses.add(createTextMessage(update, "Расскажи о себе и кого хочешь найти, чем предлагаешь заняться. " +
+                            "Это поможет лучше подобрать тебе компанию."));
+
+                    if (firstCount == 1) {
+                        createButtons(List.of("Пропустить"));
+                    } else {
+                        createButtons(List.of("Пропустить", "Оставить"));
+                    }
+
+                    count = 7;
+                    break;
+                case 7:
+                    if (update.getMessage().getText().equals("Пропустить")) {
+                        userLocal.setDescription("");
+                    } else if (update.getMessage().getText().equals("Оставить")) {
+                        userLocal.setDescription(user.getDescription());
+                    } else {
+                        userLocal.setDescription(update.getMessage().getText());
+                    }
+
+                    if (firstCount == 1) {
+                        userService.saveLocalUsers(userLocal);
+                        user = userService.findByUserId(userLocal.getUserId());
+                        userLocal.setOppositeSexId(user.getId());
+                        userService.updateUser(userLocal);
+                    } else {
+                        userService.updateUser(userLocal);
+                    }
+
+                    responses = myProfile(update);
+
+                    count = 0;
+                    firstCount = 0;
+
+                    break;
+            }
         }
+
         return responses;
     }
 
