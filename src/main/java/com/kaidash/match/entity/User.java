@@ -27,8 +27,8 @@ public class User {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "user_name")
-    private String userName;
+    @Column(name = "nickname")
+    private String nickname;
 
     @Column(name = "age")
     private int age;

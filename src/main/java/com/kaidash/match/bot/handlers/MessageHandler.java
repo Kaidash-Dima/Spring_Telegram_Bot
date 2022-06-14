@@ -63,10 +63,7 @@ public class MessageHandler {
                 responses.add(nextProfile(update));
                 break;
             case "\uD83D\uDCA4":
-                likeUser = 3;
-                assert user != null;
-                user.setOppositeSexId(user.getOppositeSexId() - 1);
-                userService.saveUser(user);
+                likeUser = 2;
                 responses.add(SendMessage.builder().chatId(String.valueOf(update.getMessage().getChatId()))
                         .text("Подождем пока кто-то увидит твою анкету").build());
                 responses.add(waitingProfile(update));
@@ -87,7 +84,8 @@ public class MessageHandler {
         List<SendMessage> responses = new ArrayList<>();
         User user = userService.findByUserId(update.getMessage().getFrom().getId());
         List<Match> matches = matchService.findAllByUserId(user.getId());
-        List<Match> matchesOpposite = new ArrayList<>();
+        List<Match> matchesOpposite;
+        boolean matching = false;
 
         if(matches.size() != 0) {
             for (Match temp : matches){
@@ -100,21 +98,26 @@ public class MessageHandler {
                             responses.add(SendMessage.builder().chatId(String.valueOf(update.getMessage().getChatId()))
                                     .text(outputProfile(temp.getOppositeUserId())).build());
                             responses.add(SendMessage.builder().chatId(String.valueOf(update.getMessage().getChatId()))
-                                    .text("Есть взаимная симпатия! Начинай общаться\uD83D\uDC49" + "@" + temp.getOppositeUserId().getUserName())
+                                    .text("Есть взаимная симпатия! Начинай общаться\uD83D\uDC49" + "@" + temp.getOppositeUserId().getNickname())
                                     .build());
                             responses.add(SendMessage.builder().chatId(String.valueOf(userService.findById(tempOpposite.getUserId()).getUserId()))
                                     .text(outputProfile(temp.getOppositeUserId())).build());
                             responses.add(SendMessage.builder().chatId(String.valueOf(userService.findById(tempOpposite.getUserId()).getUserId()))
-                                    .text("Есть взаимная симпатия! Начинай общаться\uD83D\uDC49" + "@" + tempOpposite.getOppositeUserId().getUserName())
+                                    .text("Есть взаимная симпатия! Начинай общаться\uD83D\uDC49" + "@" + tempOpposite.getOppositeUserId().getNickname())
                                     .build());
                             matchService.deleteById(tempOpposite);
                             matchService.deleteById(temp);
+                            matching = true;
                             break;
                         }
                     }
                 }
             }
-            responses.add(waitingProfile(update));
+            if (!matching) {
+                responses.add(SendMessage.builder().chatId(String.valueOf(update.getMessage().getChatId()))
+                        .text("Еще не кто не лайкнул твою анкету").build());
+                responses.add(waitingProfile(update));
+            }
         }else{
             responses.add(SendMessage.builder().chatId(String.valueOf(update.getMessage().getChatId()))
                     .text("Еще не кто не лайкнул твою анкету").build());
