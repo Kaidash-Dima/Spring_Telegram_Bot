@@ -10,8 +10,6 @@ target/
 .idea/jarRepositories.xml
 .idea/compiler.xml
 .idea/libraries/
-.idea/dataSources/a3d6488e-c912-4517-a1d0-56c0c6bfebfc.xml
-.idea/dataSources/a3d6488e-c912-4517-a1d0-56c0c6bfebfc/storage_v2/_src_/database/matchBot.whmyEQ/schema/public.abK9xQ.meta
 .idea/workspace.xml
 *.iws
 *.iml
