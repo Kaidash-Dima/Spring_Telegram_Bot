@@ -4,10 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2dacd836-b266-4d42-b93b-88750d6f74e7" name="Changes" comment="">
+    <list default="true" id="2dacd836-b266-4d42-b93b-88750d6f74e7" name="Changes" comment="change gitignore">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaidash/match/bot/Bot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaidash/match/bot/Bot.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/kaidash/match/bot/handlers/MessageHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaidash/match/bot/handlers/MessageHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaidash/match/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaidash/match/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/test values id users" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,6 +101,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Spring Boot.RunApp" />
+        <item itemvalue="Spring Boot.RunApp" />
+        <item itemvalue="Spring Boot.RunApp" />
+        <item itemvalue="Spring Boot.RunApp" />
+        <item itemvalue="Spring Boot.RunApp" />
       </list>
     </recent_temporary>
   </component>
@@ -131,6 +138,8 @@
       <workItem from="1655006098490" duration="3943000" />
       <workItem from="1655144619538" duration="166000" />
       <workItem from="1655265433459" duration="7908000" />
+      <workItem from="1655285197656" duration="978000" />
+      <workItem from="1655296783169" duration="2280000" />
     </task>
     <servers />
   </component>

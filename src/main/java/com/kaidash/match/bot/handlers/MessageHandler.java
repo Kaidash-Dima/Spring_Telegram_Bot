@@ -21,7 +21,6 @@ public class MessageHandler {
     private final UserService userService;
     private final ButtonsService buttonsService;
     private final MatchService matchService;
-//    private SendMessage sendMessage = new SendMessage();
 
     @Autowired
     public MessageHandler(UserService userService, ButtonsService buttonsService, MatchService matchService) {
@@ -83,11 +82,6 @@ public class MessageHandler {
                 setDescriptionProfile(update,user);
                 responses = myProfile(update, user);
                 break;
-//            case NEXT_PROFILE:
-//                responses.add(nextProfile(update, user));
-//                user.setChatStatus(ChatStatus.DISLIKE);
-//                userService.updateUser(user);
-//                break;
             case LIKE:
             case DISLIKE:
                 responses.add(nextProfile(update, user));
