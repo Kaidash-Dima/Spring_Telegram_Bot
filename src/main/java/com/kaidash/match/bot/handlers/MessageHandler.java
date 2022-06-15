@@ -39,6 +39,7 @@ public class MessageHandler {
             user.setUserId(update.getMessage().getFrom().getId());
             user.setNickname(update.getMessage().getFrom().getUserName());
             user.setName(update.getMessage().getFrom().getFirstName());
+            user.setOppositeSexId(userService.getFirstUser().getId());
             user.setChatStatus(ChatStatus.START);
             userService.saveUser(user);
         }
@@ -301,6 +302,7 @@ public class MessageHandler {
         }
 
         long nextId = 0;
+        boolean temp = true;
         if (update.getMessage().getText().equals("2")){
             userService.resetId(user.getOppositeSexId() - 1);
         }
@@ -311,6 +313,10 @@ public class MessageHandler {
                 userService.resetId(oppositeUser.getId());
                 nextId = oppositeUser.getId();
             }else {
+                if (temp) {
+                    userService.resetId(user.getOppositeSexId());
+                    temp = false;
+                }
                 nextId = userService.nextId();
                 oppositeUser = userService.findById(nextId);
             }
