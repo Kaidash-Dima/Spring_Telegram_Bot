@@ -52,5 +52,6 @@ public class User {
     private List<Match> matches;
 
     @Column(name = "chat_status")
+    @Enumerated(value = EnumType.STRING)
     private ChatStatus chatStatus;
 }
