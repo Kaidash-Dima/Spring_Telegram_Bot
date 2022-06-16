@@ -93,7 +93,6 @@ public class MessageHandler {
                     break;
                 case SHOW_MATCHES:
                     responses = likeProfile(update, user);
-                    responses.add(waitingProfile(update, user));
                     break;
             }
         }else {
@@ -753,7 +752,7 @@ public class MessageHandler {
                 nextId = userService.nextId();
                 oppositeUser = userService.findById(nextId);
             }
-        }while (user.getOppositeSex() != oppositeUser.getSex());
+        }while (user.getOppositeSex() != oppositeUser.getSex() || user.getId() == oppositeUser.getId());
 
         user.setOppositeSexId(nextId);
         userService.saveUser(user);
