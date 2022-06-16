@@ -1,6 +1,8 @@
 package com.kaidash.match.entity;
 
 public enum ChatStatus {
+    REGISTRATION,
+    LANGUAGE,
     START,
     ENTER_NAME,
     ENTER_AGE,

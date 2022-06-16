@@ -54,4 +54,8 @@ public class User {
     @Column(name = "chat_status")
     @Enumerated(value = EnumType.STRING)
     private ChatStatus chatStatus;
+
+    @Column(name = "language")
+    @Enumerated(value = EnumType.STRING)
+    private Language language;
 }
