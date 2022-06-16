@@ -23,6 +23,9 @@ public class Bot extends TelegramWebhookBot {
     @Value("${bot.token}")
     private String token;
 
+    @Value("${bot.webHookPath}")
+    private String path;
+
     private final MessageHandler messageHandler;
 
     @Autowired
@@ -40,6 +43,10 @@ public class Bot extends TelegramWebhookBot {
         return token;
     }
 
+    @Override
+    public String getBotPath() {
+        return path;
+    }
 //    @SneakyThrows
 //    @Override
 //    public void onUpdateReceived(Update update) {
@@ -50,25 +57,26 @@ public class Bot extends TelegramWebhookBot {
 //        }
 //
 //        for (SendMessage res : responces) execute(res);
+
 //    }
 
     @SneakyThrows
     @Override
     public BotApiMethod<?> onWebhookUpdateReceived(Update update) {
-        List<SendMessage> responces = new ArrayList<>();
+//        List<SendMessage> responces = new ArrayList<>();
         SendMessage message = new SendMessage();
 
-        if (update.hasMessage() && update.getMessage().hasText()){
-            responces = messageHandler.handle(update);
-        }
+//        if (update.hasMessage() && update.getMessage().hasText()){
+//            responces = messageHandler.handle(update);
+//        }
+//        SendMessage.builder().chatId(String.valueOf(update.getMessage().getChatId()))
+//                .text("Подождем пока кто-то увидит твою анкету").build();
+
+        message.setChatId(String.valueOf(update.getMessage().getChatId()));
+        message.setText("Hello");
 
         return message;
 //        for (SendMessage res : responces) execute(res);
 //        return null;
-    }
-
-    @Override
-    public String getBotPath() {
-        return null;
     }
 }
