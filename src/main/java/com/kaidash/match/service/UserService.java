@@ -55,6 +55,7 @@ public class UserService {
         user1.setDescription(user.getDescription());
         user1.setOppositeSexId(user.getOppositeSexId());
         user1.setChatStatus(user.getChatStatus());
+        user1.setLanguage(user.getLanguage());
         saveUser(user1);
     }
 
