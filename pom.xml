@@ -60,6 +60,38 @@
             <artifactId>hibernate-core</artifactId>
             <version>6.0.2.Final</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-wrapper-plugin</artifactId>
+            <version>3.1.1</version>
+            <type>maven-plugin</type>
+        </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+<!--            <plugin>-->
+<!--                <groupId>io.takari.maven.plugins</groupId>-->
+<!--                <artifactId>provisio-maven-plugin</artifactId>-->
+<!--                &lt;!&ndash;  careful - upgrade to 0.1.50 causes problem with extraction of tar.gz-->
+<!--                instead of into .mvn/wrapper it looses the .mvn path and extracts to wrapper &ndash;&gt;-->
+<!--                <version>0.1.46</version>-->
+<!--                <extensions>true</extensions>-->
+<!--            </plugin>-->
+
+<!--            <plugin>-->
+<!--                <groupId>com.rimerosolutions.maven.plugins</groupId>-->
+<!--                <artifactId>wrapper-maven-plugin</artifactId>-->
+<!--                <version>0.0.4</version>-->
+<!--                <inherited>false</inherited>-->
+<!--                <configuration>-->
+<!--                    <mavenVersion>3.3.1</mavenVersion>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+
+
+        </plugins>
+    </build>
 
 </project>
