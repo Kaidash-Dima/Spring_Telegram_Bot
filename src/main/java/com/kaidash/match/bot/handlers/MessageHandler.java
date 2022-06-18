@@ -21,7 +21,9 @@ public class MessageHandler {
     }
 
     public SendMessage handle(Update update){
-        User user = userService.findByUserId(update.getMessage().getFrom().getId());
+        long id = update.getMessage().getFrom().getId();
+        User user = userService.findByUserId(id);
+
         SendMessage sendMessage = null;
 
         if (user != null) {
