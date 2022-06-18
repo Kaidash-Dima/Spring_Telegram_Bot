@@ -5,8 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2dacd836-b266-4d42-b93b-88750d6f74e7" name="Changes" comment="change gitignore">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaidash/match/bot/handlers/MessageHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaidash/match/bot/handlers/MessageHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -140,7 +138,7 @@
       <workItem from="1655484313280" duration="1190000" />
       <workItem from="1655490679188" duration="108000" />
       <workItem from="1655491762648" duration="1006000" />
-      <workItem from="1655551846924" duration="6023000" />
+      <workItem from="1655551846924" duration="6598000" />
     </task>
     <servers />
   </component>
