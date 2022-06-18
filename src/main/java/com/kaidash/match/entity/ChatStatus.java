@@ -10,7 +10,6 @@ public enum ChatStatus {
     ENTER_OPPOSITE_SEX,
     ENTER_CITY,
     ENTER_DESCRIPTION,
-    NEXT_PROFILE,
     LIKE,
     DISLIKE,
     SLEEP,
