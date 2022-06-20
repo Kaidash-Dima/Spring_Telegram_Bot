@@ -11,6 +11,9 @@ import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.List;
 
 @Component
@@ -25,6 +28,8 @@ public class Bot extends TelegramWebhookBot {
 
     @Value("${bot.webHookPath}")
     private String path;
+
+    private static final String PORT = System.getenv("PORT");
 
     private final MessageHandler messageHandler;
 
@@ -51,6 +56,15 @@ public class Bot extends TelegramWebhookBot {
     @SneakyThrows
     @Override
     public BotApiMethod<?> onWebhookUpdateReceived(Update update) {
+
+        try (ServerSocket serverSocket = new ServerSocket(Integer.parseInt(PORT))) {
+            while (true) {
+                Socket clientSocket = serverSocket.accept();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return messageHandler.handle(update);
     }
 
