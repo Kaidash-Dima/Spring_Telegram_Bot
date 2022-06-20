@@ -1,11 +1,13 @@
 package com.kaidash.match.bot;
 
 //import com.kaidash.match.bot.handlers.MessageHandler;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.DefaultBotOptions;
+import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.bots.TelegramWebhookBot;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -13,7 +15,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 
 @Component
 @EnableScheduling
-public class Bot extends TelegramWebhookBot {
+public class Bot extends TelegramLongPollingBot {
 
     @Value("${bot.name}")
     private String name;
@@ -34,15 +36,20 @@ public class Bot extends TelegramWebhookBot {
         return token;
     }
 
+//    @Override
+//    public String getBotPath() {
+//        return path;
+//    }
+
+
+//    @Override
+//    public BotApiMethod<?> onWebhookUpdateReceived(Update update) {
+//        return SendMessage.builder().chatId(String.valueOf(update.getMessage().getChatId())).text(update.getMessage().getText()).build();
+//    }
+
+    @SneakyThrows
     @Override
-    public String getBotPath() {
-        return path;
+    public void onUpdateReceived(Update update) {
+        execute(SendMessage.builder().chatId(String.valueOf(update.getMessage().getChatId())).text(update.getMessage().getText()).build());
     }
-
-
-    @Override
-    public BotApiMethod<?> onWebhookUpdateReceived(Update update) {
-        return SendMessage.builder().chatId(String.valueOf(update.getMessage().getChatId())).text(update.getMessage().getText()).build();
-    }
-
 }
