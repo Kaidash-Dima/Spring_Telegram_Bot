@@ -14,7 +14,7 @@ public class WebHookController {
         this.bot = bot;
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public BotApiMethod<?> onUpdateReceived(@RequestBody Update update){
         return bot.onWebhookUpdateReceived(update);
     }
