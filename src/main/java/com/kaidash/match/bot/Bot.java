@@ -42,7 +42,7 @@ public class Bot extends TelegramWebhookBot {
 
     @Override
     public BotApiMethod<?> onWebhookUpdateReceived(Update update) {
-        return SendMessage.builder().chatId(String.valueOf(update.getMessage().getChatId())).text(update.getMessage().getText()).build();;
+        return SendMessage.builder().chatId(String.valueOf(update.getMessage().getChatId())).text(update.getMessage().getText()).build();
     }
 
 }
