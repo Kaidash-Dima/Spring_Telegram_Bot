@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2dacd836-b266-4d42-b93b-88750d6f74e7" name="Changes" comment="change gitignore">
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaidash/match/controller/WebHookController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaidash/match/controller/WebHookController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -159,12 +159,17 @@
         <entry key="MAIN">
           <value>
             <State>
+              <option name="CUSTOM_BOOLEAN_PROPERTIES">
+                <map>
+                  <entry key="Show.Git.Branches" value="true" />
+                </map>
+              </option>
               <option name="FILTERS">
                 <map>
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="origin/develop" />
+                        <option value="heroku" />
                       </list>
                     </value>
                   </entry>
