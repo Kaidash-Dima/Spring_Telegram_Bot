@@ -1,7 +1,6 @@
 package com.kaidash.match.bot;
 
 import com.kaidash.match.bot.handlers.MessageHandler;
-import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -48,17 +47,10 @@ public class Bot extends TelegramWebhookBot {
         return path;
     }
 
-    @SneakyThrows
+
     @Override
     public BotApiMethod<?> onWebhookUpdateReceived(Update update) {
         return messageHandler.handle(update);
-    }
-
-    @SneakyThrows
-    public void listSendMessage(List<SendMessage> messageList) {
-        for(SendMessage message : messageList){
-            execute(message);
-        }
     }
 
 }
