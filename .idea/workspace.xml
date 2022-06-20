@@ -5,23 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2dacd836-b266-4d42-b93b-88750d6f74e7" name="Changes" comment="change gitignore">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/kaidash/match/bot/AppConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/kaidash/match/bot/RunAppConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/kaidash/match/bot/Bot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaidash/match/bot/Bot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaidash/match/bot/handlers/MenuHandler.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaidash/match/bot/handlers/MessageHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaidash/match/bot/handlers/MessageHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaidash/match/controller/WebHookController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaidash/match/controller/WebHookController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaidash/match/entity/ChatStatus.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaidash/match/entity/Language.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaidash/match/entity/Match.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaidash/match/entity/User.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaidash/match/repository/MatchRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaidash/match/repository/UserRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaidash/match/service/ButtonsService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaidash/match/service/MatchService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaidash/match/service/PingTask.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaidash/match/service/UserService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -186,7 +174,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="develop" />
+                        <option value="l" />
                       </list>
                     </value>
                   </entry>

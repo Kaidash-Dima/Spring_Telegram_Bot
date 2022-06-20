@@ -1,16 +1,15 @@
 package com.kaidash.match.bot;
 
-import com.kaidash.match.bot.handlers.MessageHandler;
+//import com.kaidash.match.bot.handlers.MessageHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Component;
+import org.telegram.telegrambots.bots.DefaultBotOptions;
 import org.telegram.telegrambots.bots.TelegramWebhookBot;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
-
-import java.util.List;
 
 @Component
 @EnableScheduling
@@ -24,13 +23,6 @@ public class Bot extends TelegramWebhookBot {
 
     @Value("${bot.webHookPath}")
     private String path;
-
-    private final MessageHandler messageHandler;
-
-    @Autowired
-    public Bot(MessageHandler messageHandler) {
-        this.messageHandler = messageHandler;
-    }
 
     @Override
     public String getBotUsername() {
@@ -50,7 +42,7 @@ public class Bot extends TelegramWebhookBot {
 
     @Override
     public BotApiMethod<?> onWebhookUpdateReceived(Update update) {
-        return messageHandler.handle(update);
+        return SendMessage.builder().chatId(String.valueOf(update.getMessage().getChatId())).text(update.getMessage().getText()).build();;
     }
 
 }
