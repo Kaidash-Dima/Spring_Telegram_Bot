@@ -1,1 +1,1 @@
-java -Dserver.port=$PORT $JAVA_OPTS -jar target/demo1-0.0.1-SNAPSHOT.jar
+java -Dserver.port=$PORT $JAVA_OPTS -jar target/Telegram_Bot-1.0-SNAPSHOT.jar
