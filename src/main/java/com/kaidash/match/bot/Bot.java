@@ -60,5 +60,4 @@ public class Bot extends TelegramWebhookBot {
             execute(message);
         }
     }
-
 }
